@@ -212,7 +212,7 @@ class Dynamics:
             self._relative_trajectory = None
 
 
-        print("Using {0} steps".format(self.velocity.shape[0]))
+        print(("Using {0} steps".format(self.velocity.shape[0])))
 
     def get_number_of_atoms(self):
         if self._number_of_atoms is None:
@@ -299,12 +299,12 @@ class Dynamics:
             self._supercell_matrix = np.around(supercell_matrix_real).astype("int")
 
             if abs(sum(self._supercell_matrix - supercell_matrix_real)/np.linalg.norm(supercell_matrix_real)) > tolerance:
-                print(abs(sum(self._supercell_matrix - supercell_matrix_real) / np.linalg.norm(supercell_matrix_real)))
+                print((abs(sum(self._supercell_matrix - supercell_matrix_real) / np.linalg.norm(supercell_matrix_real))))
                 print('Warning! Structure cell and MD cell do not fit!')
-                print('Cell size relation is not integer: {0}'.format(supercell_matrix_real))
+                print(('Cell size relation is not integer: {0}'.format(supercell_matrix_real)))
                 exit()
 
-            print('MD cell size relation: {0}'.format(self._supercell_matrix))
+            print(('MD cell size relation: {0}'.format(self._supercell_matrix)))
 
         return self._supercell_matrix
 

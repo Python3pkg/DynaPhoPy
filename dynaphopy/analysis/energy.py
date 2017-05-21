@@ -14,15 +14,15 @@ def boltzmann_distribution(trajectory, parameters):
 
     average = np.average(velocity)
     deviation = np.std(velocity)
-    print('Average: {0:3.7e} Angstrom/ps'.format(average))
-    print('Deviation: {0:3.7e} Angstrom/ps'.format(deviation))
+    print(('Average: {0:3.7e} Angstrom/ps'.format(average)))
+    print(('Deviation: {0:3.7e} Angstrom/ps'.format(deviation)))
     maxwell = stats.maxwell
 
     params = maxwell.fit(velocity, floc=0, scale=np.average([average, deviation]))
-    print('Distribution parameter: {0:3.7e} Angstrom/ps'.format(params[1]))
+    print(('Distribution parameter: {0:3.7e} Angstrom/ps'.format(params[1])))
 
     temperature = pow(params[1], 2)/ kb_boltzmann
-    print('Temperature fit: {0:7.6f} K'.format(temperature))
+    print(('Temperature fit: {0:7.6f} K'.format(temperature)))
 
     if not parameters.silent:
         x = np.linspace(0, float(average + 3 * deviation), 100)

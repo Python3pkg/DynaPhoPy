@@ -115,7 +115,7 @@ def read_vasp_trajectory(file_name, structure=None, time_step=None,
             energy = energy[-last_steps:]
 
 
-        print('Number of total steps read: {0}'.format(trajectory.shape[0]))
+        print(('Number of total steps read: {0}'.format(trajectory.shape[0])))
         time = np.array([i*time_step for i in range(trajectory.shape[0])], dtype=float)
 
         print('Trajectory file read')
@@ -143,7 +143,7 @@ def read_lammps_trajectory(file_name, structure=None, time_step=None,
     try:
         temp_directory = os.environ["DYNAPHOPY_TEMPDIR"]
         if os.path.isdir(temp_directory):
-            print('Set temporal directory: {0}'.format(temp_directory))
+            print(('Set temporal directory: {0}'.format(temp_directory)))
             temp_directory += '/'
         else:
             temp_directory = ''
@@ -286,7 +286,7 @@ def read_lammps_trajectory(file_name, structure=None, time_step=None,
                     data.append(np.array(read_coordinates, dtype=float)) #in angstroms
 
             except ValueError:
-                print("Error reading step {0}".format(counter))
+                print(("Error reading step {0}".format(counter)))
                 break
                 # print(read_coordinates)
 
@@ -324,7 +324,7 @@ def read_lammps_trajectory(file_name, structure=None, time_step=None,
                             supercell=supercell,
                             memmap=memmap)
 
-    print('LAMMPS parsing error. Data not recognized: {}'.format(lammps_labels))
+    print(('LAMMPS parsing error. Data not recognized: {}'.format(lammps_labels)))
     exit()
 
 
@@ -342,7 +342,7 @@ def read_VASP_XDATCAR(file_name, structure=None, time_step=None,
     try:
         temp_directory = os.environ["DYNAPHOPY_TEMPDIR"]
         if os.path.isdir(temp_directory):
-            print('Set temporal directory: {0}'.format(temp_directory))
+            print(('Set temporal directory: {0}'.format(temp_directory)))
             temp_directory += '/'
         else:
             temp_directory = ''
@@ -423,7 +423,7 @@ def read_VASP_XDATCAR(file_name, structure=None, time_step=None,
                     data.append(np.array(read_coordinates, dtype=float)) #in angstroms
 
             except ValueError:
-                print("Error reading step {0}".format(counter))
+                print(("Error reading step {0}".format(counter)))
                 break
                 # print(read_coordinates)
 

@@ -9,7 +9,7 @@ from dynaphopy.interface import phonopy_link as pho_interface
 
 
 def get_trajectory_parser(file_name, bytes_to_check=1000000):
-    import trajectory_parsers as tp
+    from . import trajectory_parsers as tp
 
     parsers_keywords = {'vasp_outcar': {'function': tp.read_vasp_trajectory,
                                         'keywords': ['NIONS', 'POMASS', 'direct lattice vectors']},
@@ -21,13 +21,13 @@ def get_trajectory_parser(file_name, bytes_to_check=1000000):
 
     #Check file exists
     if not os.path.isfile(file_name):
-        print file_name + ' file does not exist'
+        print(file_name + ' file does not exist')
         exit()
 
     file_size = os.stat(file_name).st_size
 
     #Check available parsers
-    for parser in parsers_keywords.itervalues():
+    for parser in parsers_keywords.values():
         with open(file_name, "r+") as f:
             file_map = mmap.mmap(f.fileno(), np.min([bytes_to_check, file_size]))
             num_test = [file_map.find(keyword) for keyword in parser['keywords']]
@@ -186,7 +186,7 @@ def read_from_file_structure_poscar(file_name, number_of_dimensions=3):
 
     #Old style POSCAR format
     except ValueError:
-        print "Reading old style POSCAR"
+        print("Reading old style POSCAR")
         number_of_types = np.array(data_lines[5].split(), dtype=int)
         coordinates_type = data_lines[6][0]
         if coordinates_type == 'D' or coordinates_type == 'd':
@@ -268,7 +268,7 @@ def generate_test_trajectory(structure, supercell=(1, 1, 1),
     eigenvectors_r = []
     frequencies_r = []
     for i in range(len(q_vector_list)):
-        print(q_vector_list[i])
+        print((q_vector_list[i]))
         eigenvectors, frequencies = pho_interface.obtain_eigenvectors_and_frequencies(structure, q_vector_list[i])
         eigenvectors_r.append(eigenvectors)
         frequencies_r.append(frequencies)
@@ -301,7 +301,7 @@ def generate_test_trajectory(structure, supercell=(1, 1, 1),
             _progress_bar(float(time + time_step) / total_time, 'generating', )
 
     trajectory = np.array(trajectory)
-    print(trajectory.shape[0])
+    print((trajectory.shape[0]))
 
     time = np.array([i * time_step for i in range(trajectory.shape[0])], dtype=float)
     energy = np.array([number_of_atoms * number_of_dimensions *
@@ -362,7 +362,7 @@ def read_from_file_test():
 
     structure.set_number_of_primitive_atoms(2)
     print('number of atoms in primitive cell')
-    print(structure.get_number_of_primitive_atoms())
+    print((structure.get_number_of_primitive_atoms()))
     print('number of total atoms in structure (super cell)')
     print(number_of_atoms)
 
@@ -423,7 +423,7 @@ def read_parameters_from_input_file(file_name, number_of_dimensions=3):
 
     #Check file exists
     if not os.path.isfile(file_name):
-        print file_name + ' file does not exist'
+        print(file_name + ' file does not exist')
         exit()
 
     input_file = open(file_name, "r").readlines()
@@ -533,7 +533,7 @@ def save_data_hdf5(file_name, time, super_cell, trajectory=None, velocity=None, 
 def initialize_from_hdf5_file(file_name, structure, read_trajectory=True, initial_cut=1, final_cut=None, memmap=False):
     import h5py
 
-    print("Reading data from hdf5 file: " + file_name)
+    print(("Reading data from hdf5 file: " + file_name))
 
     trajectory = None
     velocity = None
@@ -542,7 +542,7 @@ def initialize_from_hdf5_file(file_name, structure, read_trajectory=True, initia
 
     #Check file exists
     if not os.path.isfile(file_name):
-        print(file_name + ' file does not exist!')
+        print((file_name + ' file does not exist!'))
         exit()
 
     hdf5_file = h5py.File(file_name, "r")
@@ -569,7 +569,7 @@ def initialize_from_hdf5_file(file_name, structure, read_trajectory=True, initia
 
     if "reduced_q_vector" in hdf5_file:
         reduced_q_vector = hdf5_file['reduced_q_vector'][:]
-        print("Load trajectory projected onto {0}".format(reduced_q_vector))
+        print(("Load trajectory projected onto {0}".format(reduced_q_vector)))
 
     time = hdf5_file['time'][:]
     super_cell = hdf5_file['super_cell'][:]

@@ -44,11 +44,11 @@ class Quasiparticle:
     def crop_trajectory(self, last_steps):
         if self._vc is None:
             self._dynamic.crop_trajectory(last_steps)
-            print("Using {0} steps".format(len(self._dynamic.velocity)))
+            print(("Using {0} steps".format(len(self._dynamic.velocity))))
         else:
             if last_steps is not None:
                 self._vc = self._vc[-last_steps:, :, :]
-            print("Using {0} steps".format(len(self._vc)))
+            print(("Using {0} steps".format(len(self._vc))))
 
     # Memory clear methods
     def full_clear(self):
@@ -103,7 +103,7 @@ class Quasiparticle:
                                velocity=self.dynamic.velocity,
                                trajectory=trajectory)
 
-        print("Velocity saved in file " + file_name)
+        print(("Velocity saved in file " + file_name))
 
     def save_vc_hdf5(self, file_name):
 
@@ -113,7 +113,7 @@ class Quasiparticle:
                                vc=self.get_vc(),
                                reduced_q_vector=self.get_reduced_q_vector())
 
-        print("Projected velocity saved in file " + file_name)
+        print(("Projected velocity saved in file " + file_name))
 
     def set_number_of_mem_coefficients(self, coefficients):
         self.power_spectra_clear()
@@ -123,7 +123,7 @@ class Quasiparticle:
         if atom_type in range(self.dynamic.structure.get_number_of_primitive_atoms()):
             self.parameters.project_on_atom = atom_type
         else:
-            print('Atom type {} does not exist'.format(atom_type))
+            print(('Atom type {} does not exist'.format(atom_type)))
             exit()
 
     def _set_frequency_range(self, frequency_range):
@@ -272,7 +272,7 @@ class Quasiparticle:
                                                                        NAC=self.parameters.use_NAC)
         np.set_printoptions(linewidth=200)
         for i, freq in enumerate(self._bands[1]):
-            print(str(np.hstack([self._bands[1][i][None].T, self._bands[2][i]])).replace('[', '').replace(']', ''))
+            print((str(np.hstack([self._bands[1][i][None].T, self._bands[2][i]])).replace('[', '').replace(']', '')))
 
     def plot_eigenvectors(self):
         modes.plot_phonon_modes(self.dynamic.structure,
@@ -328,7 +328,7 @@ class Quasiparticle:
 
             if self.parameters.project_on_atom > -1:
                 element = self.dynamic.structure.get_atomic_types(unique=True)[self.parameters.project_on_atom]
-                print('Project on atom {} : {}'.format(self.parameters.project_on_atom, element))
+                print(('Project on atom {} : {}'.format(self.parameters.project_on_atom, element)))
 
             self._vc = projection.project_onto_wave_vector(self.dynamic,
                                                            self.get_q_vector(),
@@ -386,27 +386,27 @@ class Quasiparticle:
 
     # Power spectra related methods
     def select_power_spectra_algorithm(self, algorithm):
-        if algorithm in power_spectrum_functions.keys():
+        if algorithm in list(power_spectrum_functions.keys()):
             if algorithm != self.parameters.power_spectra_algorithm:
                 self.power_spectra_clear()
                 self.parameters.power_spectra_algorithm = algorithm
-            print("Using {0} function".format(power_spectrum_functions[algorithm][1]))
+            print(("Using {0} function".format(power_spectrum_functions[algorithm][1])))
         else:
             print("Power spectrum algorithm number not found!\nPlease select:")
-            for i in power_spectrum_functions.keys():
-                print('{0} : {1}'.format(i, power_spectrum_functions[i][1]))
+            for i in list(power_spectrum_functions.keys()):
+                print(('{0} : {1}'.format(i, power_spectrum_functions[i][1])))
             exit()
 
     def select_fitting_function(self, function):
         from dynaphopy.analysis.fitting.fitting_functions import fitting_functions
-        if function in fitting_functions.keys():
+        if function in list(fitting_functions.keys()):
             if function != self.parameters.fitting_function:
                 self.force_constants_clear()
                 self.parameters.fitting_function = function
         else:
             print("Fitting function number not found!\nPlease select:")
-            for i in fitting_functions.keys():
-                print('{0} : {1}'.format(i, fitting_functions[i]))
+            for i in list(fitting_functions.keys()):
+                print(('{0} : {1}'.format(i, fitting_functions[i])))
             exit()
 
     def get_power_spectrum_phonon(self):
@@ -480,20 +480,20 @@ class Quasiparticle:
             velocity_mass_average = self.dynamic.get_velocity_mass_average()
 
             if projected_atom_type >= 0:
-                print('Power spectrum projected onto atom type {0}'.format(projected_atom_type))
+                print(('Power spectrum projected onto atom type {0}'.format(projected_atom_type)))
                 supercell = self.dynamic.get_supercell_matrix()
                 atom_types = np.array(self.dynamic.structure.get_atom_type_index(supercell=supercell))
                 atom_indices = np.argwhere(atom_types == projected_atom_type).flatten()
                 if len(atom_indices) == 0:
-                    print('Atom type {0} does not exist'.format(projected_atom_type))
+                    print(('Atom type {0} does not exist'.format(projected_atom_type)))
                     exit()
 
                 # Only works if project on atom is requested!
                 if projection_on_coordinate >= number_of_dimensions:
-                    print('Projected coordinate should be smaller than {}'.format(number_of_dimensions))
+                    print(('Projected coordinate should be smaller than {}'.format(number_of_dimensions)))
                     exit()
                 if projection_on_coordinate > -1:
-                    print('Power spectrum projected onto coordinate {}'.format(projection_on_coordinate))
+                    print(('Power spectrum projected onto coordinate {}'.format(projection_on_coordinate)))
                     velocity_mass_average = velocity_mass_average[:, atom_indices, projection_on_coordinate, None]
                 else:
                     velocity_mass_average = velocity_mass_average[:, atom_indices]
@@ -599,7 +599,7 @@ class Quasiparticle:
         plt.show()
 
         total_integral = integrate.simps(self.get_power_spectrum_full(), x=self.get_frequency_range())
-        print ("Total Area (Kinetic energy <K>): {0} eV".format(total_integral))
+        print(("Total Area (Kinetic energy <K>): {0} eV".format(total_integral)))
 
     def plot_power_spectrum_wave_vector(self):
         plt.suptitle('Projection onto wave vector')
@@ -608,7 +608,7 @@ class Quasiparticle:
         plt.ylabel('eV * ps')
         plt.show()
         total_integral = integrate.simps(self.get_power_spectrum_wave_vector(), x=self.get_frequency_range())
-        print ("Total Area (Kinetic energy <K>): {0} eV".format(total_integral))
+        print(("Total Area (Kinetic energy <K>): {0} eV".format(total_integral)))
 
     def plot_power_spectrum_phonon(self):
         for i in range(self.get_power_spectrum_phonon().shape[1]):
@@ -686,11 +686,11 @@ class Quasiparticle:
                                                  guess_position=0)
 
             parameters = fitting_function.get_fitting()
-            print('\nAtom {0}, Element {1}'.format(atom, atomic_types_unique[atom]))
+            print(('\nAtom {0}, Element {1}'.format(atom, atomic_types_unique[atom])))
             print ('-----------------------------------------')
-            print ('Mean               {0:15.6f} Angstrom'.format(parameters['peak_position']))
-            print ('Standard deviation {0:15.6f} Angstrom'.format(parameters['width']))
-            print ('Global fit error   {0:15.6f}'.format(parameters['global_error']))
+            print(('Mean               {0:15.6f} Angstrom'.format(parameters['peak_position'])))
+            print(('Standard deviation {0:15.6f} Angstrom'.format(parameters['width'])))
+            print(('Global fit error   {0:15.6f}'.format(parameters['global_error'])))
 
             plt.figure(atom + 1)
             plt.title('Atomic displacements')
@@ -711,14 +711,14 @@ class Quasiparticle:
                                     self.get_power_spectrum_full()[None].T,
                                     file_name)
         total_integral = integrate.simps(self.get_power_spectrum_full(), x=self.get_frequency_range())
-        print ("Total Area (Kinetic energy <K>): {0} eV".format(total_integral))
+        print(("Total Area (Kinetic energy <K>): {0} eV".format(total_integral)))
 
     def write_power_spectrum_wave_vector(self, file_name):
         reading.write_curve_to_file(self.get_frequency_range(),
                                     self.get_power_spectrum_wave_vector()[None].T,
                                     file_name)
         total_integral = integrate.simps(self.get_power_spectrum_wave_vector(), x=self.get_frequency_range())
-        print ("Total Area (Kinetic energy <K>): {0} eV".format(total_integral))
+        print(("Total Area (Kinetic energy <K>): {0} eV".format(total_integral)))
 
     def write_power_spectrum_phonon(self, file_name):
         reading.write_curve_to_file(self.get_frequency_range(),
@@ -770,7 +770,7 @@ class Quasiparticle:
 
     # Other
     def get_algorithm_list(self):
-        return power_spectrum_functions.values()
+        return list(power_spectrum_functions.values())
 
     def get_commensurate_points_data(self, auto_range=True):
 
@@ -782,8 +782,8 @@ class Quasiparticle:
                                                                mesh=self.parameters.mesh_phonopy)
 
                 self.set_frequency_limits([0, np.max(phonopy_dos[0][-1]) * 1.2])
-                print ('set frequency range: {} - {}'.format(self.get_frequency_range()[0],
-                                                             self.get_frequency_range()[-1]))
+                print(('set frequency range: {} - {}'.format(self.get_frequency_range()[0],
+                                                             self.get_frequency_range()[-1])))
 
             if self.parameters.use_MD_cell_commensurate:
                 self.dynamic.structure.set_supercell_phonon_renormalized(np.diag(self.dynamic.get_supercell_matrix()))
@@ -800,7 +800,7 @@ class Quasiparticle:
 
             for i, reduced_q_point in enumerate(com_points):
 
-                print ("\nQ-point: {0} / {1}      {2}".format(i + 1, len(com_points), reduced_q_point))
+                print(("\nQ-point: {0} / {1}      {2}".format(i + 1, len(com_points), reduced_q_point)))
 
                 self.set_reduced_q_vector(reduced_q_point)
                 eigenvectors.append(self.get_eigenvectors())
@@ -813,7 +813,7 @@ class Quasiparticle:
                 if q_index != 0 and self.parameters.use_symmetry:
                     renormalized_frequencies.append(renormalized_frequencies[q_index])
                     linewidths.append(linewidths[q_index])
-                    print('Skipped, equivalent to {0}'.format(q_points_list[q_index]))
+                    print(('Skipped, equivalent to {0}'.format(q_points_list[q_index])))
                     continue
 
                 self.set_reduced_q_vector(reduced_q_point)
@@ -912,7 +912,7 @@ class Quasiparticle:
 
         temperature = self.get_temperature()
 
-        print('Using mesh: {0}'.format(self.parameters.mesh_phonopy))
+        print(('Using mesh: {0}'.format(self.parameters.mesh_phonopy)))
 
         if print_phonopy:
             harmonic_properties = pho_interface.obtain_phonopy_thermal_properties(self.dynamic.structure,
@@ -924,14 +924,14 @@ class Quasiparticle:
                                                                                       mesh=self.parameters.mesh_phonopy,
                                                                                       force_constants=self.get_renormalized_force_constants())
 
-            print('\nThermal properties per unit cell ({0:.2f} K) [From phonopy (Reference)]\n'
-                  '----------------------------------------------').format(temperature)
+            print(('\nThermal properties per unit cell ({0:.2f} K) [From phonopy (Reference)]\n'
+                  '----------------------------------------------').format(temperature))
             print('                               Harmonic    Quasiparticle\n')
 
-            print('Free energy (not corrected):   {0:.4f}       {3:.4f}     KJ/mol\n'
+            print(('Free energy (not corrected):   {0:.4f}       {3:.4f}     KJ/mol\n'
                   'Entropy:                       {1:.4f}       {4:.4f}     J/K/mol\n'
                   'Cv:                            {2:.4f}       {5:.4f}     J/K/mol\n'.format(
-                   *(harmonic_properties + renormalized_properties)))
+                   *(harmonic_properties + renormalized_properties))))
 
         harmonic_properties = self.get_thermal_properties()
         renormalized_properties = self.get_thermal_properties(force_constants=self.get_renormalized_force_constants())
@@ -959,29 +959,29 @@ class Quasiparticle:
             total_energy = thm.get_total_energy(temperature, frequency_range, power_spectrum_dos)
 
             power_spectrum_properties = [free_energy, entropy, c_v, total_energy, integration]
-            print('\nThermal properties per unit cell ({0:.2f} K) [From DoS]\n'
-                  '----------------------------------------------').format(temperature)
+            print(('\nThermal properties per unit cell ({0:.2f} K) [From DoS]\n'
+                  '----------------------------------------------').format(temperature))
             print('                             Harmonic   Quasiparticle   Power spectrum\n')
-            print('Free energy   (KJ/mol): {0:12.4f}  {5:12.4f}  {10:12.4f}\n'
+            print(('Free energy   (KJ/mol): {0:12.4f}  {5:12.4f}  {10:12.4f}\n'
                   'Entropy      (J/K/mol): {1:12.4f}  {6:12.4f}  {11:12.4f}\n'
                   'Cv           (J/K/mol): {2:12.4f}  {7:12.4f}  {12:12.4f}\n'
                   'Total energy  (KJ/mol): {3:12.4f}  {8:12.4f}  {13:12.4f}\n'
                   'Integration:            {4:12.4f}  {9:12.4f}  {14:12.4f}\n'.format(*(harmonic_properties +
                                                                                         renormalized_properties +
-                                                                                        power_spectrum_properties)))
+                                                                                        power_spectrum_properties))))
             if not self.parameters.silent:
                 plt.plot(frequency_range, power_spectrum_dos, 'r-', label='Molecular dynamics')
 
         else:
-            print('\nThermal properties per unit cell ({0:.2f} K) [From DoS]\n'
-                  '----------------------------------------------').format(temperature)
+            print(('\nThermal properties per unit cell ({0:.2f} K) [From DoS]\n'
+                  '----------------------------------------------').format(temperature))
             print('                            Harmonic    Quasiparticle\n')
-            print('Free energy   (KJ/mol): {0:12.4f}  {5:12.4f}\n'
+            print(('Free energy   (KJ/mol): {0:12.4f}  {5:12.4f}\n'
                   'Entropy      (J/K/mol): {1:12.4f}  {6:12.4f}\n'
                   'Cv           (J/K/mol): {2:12.4f}  {7:12.4f}\n'
                   'Total energy  (KJ/mol): {3:12.4f}  {8:12.4f}\n'
                   'Integration:            {4:12.4f}  {9:12.4f}\n'.format(
-                   *(harmonic_properties + renormalized_properties)))
+                   *(harmonic_properties + renormalized_properties))))
 
         if not self.parameters.silent:
             self.plot_dos_phonopy(force_constants=self.get_renormalized_force_constants())
@@ -997,7 +997,7 @@ class Quasiparticle:
         atomic_types_unique = [elements[i] for i in atom_type_index_unique]
 
         if print_on_screen:
-            print('Anisotropic displacement parameters ({0}) [relative to average atomic positions]'.format(coordinate_type))
+            print(('Anisotropic displacement parameters ({0}) [relative to average atomic positions]'.format(coordinate_type)))
             print('          U11          U22          U33          U23          U13          U12')
 
         anisotropic_displacements = []
@@ -1018,25 +1018,25 @@ class Quasiparticle:
 
             if print_on_screen:
                 for equivalent in range(atom_equivalent[i]):
-                    print(
+                    print((
                     '{0:3} {1:12.8f} {2:12.8f} {3:12.8f} {4:12.8f} {5:12.8f} {6:12.8f}'.format(atomic_types_unique[i],
                                                                                                u[coordinate_type][0, 0],
                                                                                                u[coordinate_type][1, 1],
                                                                                                u[coordinate_type][2, 2],
                                                                                                u[coordinate_type][1, 2],
                                                                                                u[coordinate_type][0, 2],
-                                                                                               u[coordinate_type][0, 1]))
+                                                                                               u[coordinate_type][0, 1])))
 
             anisotropic_displacements.append(u[coordinate_type])
 
         return anisotropic_displacements
 
     def get_average_atomic_positions(self):
-        print 'Average atomic positions'
+        print('Average atomic positions')
         positions_average = self.dynamic.average_positions(to_unit_cell=True)
         elements = self.dynamic.structure.get_atomic_types()
         for i, coordinate in enumerate(positions_average):
-            print '{0:2} '.format(elements[i]) + '{0:15.8f} {1:15.8f} {2:15.8f}'.format(*coordinate.real)
+            print('{0:2} '.format(elements[i]) + '{0:15.8f} {1:15.8f} {2:15.8f}'.format(*coordinate.real))
 
 
 # Support functions

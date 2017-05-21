@@ -81,7 +81,7 @@ def obtain_eigenvectors_and_frequencies(structure, q_vector, NAC=False, test_ort
         eigenvectors = eigenvectors_normalization(eigenvectors)
         print('Testing eigenvectors orthonormality')
         np.set_printoptions(precision=3, suppress=True)
-        print(np.dot(eigenvectors.T, np.ma.conjugate(eigenvectors)).real)
+        print((np.dot(eigenvectors.T, np.ma.conjugate(eigenvectors)).real))
         np.set_printoptions(suppress=False)
 
     #Arranging eigenvectors by atoms and dimensions
@@ -122,7 +122,7 @@ def obtain_phonopy_dos(structure, mesh=(40, 40, 40), force_constants=None, freq_
         phonon.set_partial_DOS(freq_min=freq_min, freq_max=freq_max)
 
         if projected_on_atom >= len(phonon.get_partial_DOS()[1]):
-            print('No atom type {0}'.format(projected_on_atom))
+            print(('No atom type {0}'.format(projected_on_atom)))
             exit()
 
         total_dos = np.array([phonon.get_partial_DOS()[0], phonon.get_partial_DOS()[1][projected_on_atom]])

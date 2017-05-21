@@ -159,19 +159,19 @@ if __name__ == "__main__":
 
     # free_energy = get_free_energy(temp,frequency,dos) + get_free_energy_correction(temp, frequency, dos, shift)
 
-    print (get_free_energy_correction_shift(temp, frequency, dos, shift),
-           get_free_energy_correction_dos(temp, frequency, dos, dos_r))
+    print((get_free_energy_correction_shift(temp, frequency, dos, shift),
+           get_free_energy_correction_dos(temp, frequency, dos, dos_r)))
 
     free_energy = get_free_energy(temp, frequency_r, dos_r) + get_free_energy_correction_dos(temp, frequency, dos_r, dos)
     entropy = get_entropy(temp, frequency_r, dos_r)
     c_v = get_cv(temp, frequency_r, dos_r)
     print ('Renormalized')
     print ('-------------------------')
-    print ('Free energy: {0} KJ/K/mol'.format(free_energy))
-    print ('Entropy: {0} J/K/mol'.format(entropy))
-    print ('Cv: {0} J/K/mol'.format(c_v))
-    print (np.trapz(dos_r, x=frequency_r))/(8*3)
-    print (integrate.simps(dos_r,x=frequency_r)/(8*3))
+    print(('Free energy: {0} KJ/K/mol'.format(free_energy)))
+    print(('Entropy: {0} J/K/mol'.format(entropy)))
+    print(('Cv: {0} J/K/mol'.format(c_v)))
+    print((np.trapz(dos_r, x=frequency_r))/(8*3))
+    print((integrate.simps(dos_r,x=frequency_r)/(8*3)))
 
     print ('\nFrom MD')
     print ('-------------------------')
@@ -179,11 +179,11 @@ if __name__ == "__main__":
     entropy = get_entropy(temp, frequency_p, power_spectrum)
     c_v = get_cv(temp, frequency_p, power_spectrum)
 
-    print ('Free energy: {0} KJ/K/mol'.format(free_energy))
-    print ('Entropy: {0} J/K/mol'.format(entropy))
-    print ('Cv: {0} J/K/mol'.format(c_v))
-    print (np.trapz(power_spectrum, x=frequency_p))/(8*3)
-    print (integrate.simps(power_spectrum, x=frequency_p))/(8*3)
+    print(('Free energy: {0} KJ/K/mol'.format(free_energy)))
+    print(('Entropy: {0} J/K/mol'.format(entropy)))
+    print(('Cv: {0} J/K/mol'.format(c_v)))
+    print((np.trapz(power_spectrum, x=frequency_p))/(8*3))
+    print((integrate.simps(power_spectrum, x=frequency_p))/(8*3))
 
     print ('\nHARMONIC')
     print ('-------------------------')
@@ -191,8 +191,8 @@ if __name__ == "__main__":
     entropy = get_entropy(temp, frequency, dos)
     c_v = get_cv(temp, frequency, dos)
 
-    print ('Free energy: {0} KJ/K/mol'.format(free_energy))
-    print ('Entropy: {0} J/K/mol'.format(entropy))
-    print ('Cv: {0} J/K/mol'.format(c_v))
-    print (np.trapz(dos, x=frequency)/(8*3))
-    print (integrate.simps(dos, x=frequency)/(8*3))
+    print(('Free energy: {0} KJ/K/mol'.format(free_energy)))
+    print(('Entropy: {0} J/K/mol'.format(entropy)))
+    print(('Cv: {0} J/K/mol'.format(c_v)))
+    print((np.trapz(dos, x=frequency)/(8*3)))
+    print((integrate.simps(dos, x=frequency)/(8*3)))

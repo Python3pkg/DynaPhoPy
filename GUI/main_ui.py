@@ -39,7 +39,7 @@ class Dialog(QtGui.QMainWindow):
             item.setText(file_name)
             structure_item = self.ui.list_structures.currentItem()
             structure = structure_item.data(QtCore.Qt.UserRole).toPyObject()
-            print(structure.get_cell())
+            print((structure.get_cell()))
             dynamic = reading.read_from_file_trajectory(file_name,structure)
 
             item.setData(QtCore.Qt.UserRole,dynamic)

@@ -104,4 +104,4 @@ if __name__ == "__main__":
     input_parameters = reading.read_parameters_from_input_file('/home/abel/VASP/Ag2Cu2O4/MD/input_dynaphopy')
     structure = reading.read_from_file_structure_poscar(input_parameters['structure_file_name_poscar'])
  #   print(generate_VASP_structure(structure))
-    print(generate_LAMMPS_structure(structure))
+    print((generate_LAMMPS_structure(structure)))

@@ -67,7 +67,7 @@ def phonon_fitting_analysis(original, ps_frequencies, harmonic_frequencies=None,
             widths.append(0)
             errors.append(0)
             dt_Q2_s.append(0)
-            print ('Warning: Fitting not successful in peak #{0}'.format(i+1))
+            print(('Warning: Fitting not successful in peak #{0}'.format(i+1)))
             continue
 
         position = fitting_parameters['peak_position']
@@ -95,31 +95,31 @@ def phonon_fitting_analysis(original, ps_frequencies, harmonic_frequencies=None,
         fit_temperature_tot = h_planck_bar * position / (kb_boltzmann * np.log((1.0 / occupancy_tot + 1.0)))
 
         #Print section
-        print ('\nPeak # {0}'.format(i+1))
+        print(('\nPeak # {0}'.format(i+1)))
         print ('----------------------------------------------')
-        print ('Width                      {0:15.6f} THz'.format(width))
-        print ('Position                   {0:15.6f} THz'.format(position))
-        print ('Area (<K>)    ({0:.10s}) {1:15.6f} eV'.format(fitting_function.curve_name, area))  # Kinetic energy
-        print ('Area (<K>)    (Total)      {0:15.6f} eV'.format(total_integral))   # 1/2 Kinetic energy
-        print ('<|dQ/dt|^2>                {0:15.6f} eV'.format(dt_Q2_lor))        # Kinetic energy
+        print(('Width                      {0:15.6f} THz'.format(width)))
+        print(('Position                   {0:15.6f} THz'.format(position)))
+        print(('Area (<K>)    ({0:.10s}) {1:15.6f} eV'.format(fitting_function.curve_name, area)))  # Kinetic energy
+        print(('Area (<K>)    (Total)      {0:15.6f} eV'.format(total_integral)))   # 1/2 Kinetic energy
+        print(('<|dQ/dt|^2>                {0:15.6f} eV'.format(dt_Q2_lor)))        # Kinetic energy
         # print '<|dQ/dt|^2> (tot):        ', dt_Q2_tot, 'eV'        # Kinetic energy
         # print '<|Q|^2> (lor):          ', Q2_lor, 'eV' #  potential energy
         # print '<|Q|^2> (tot):          ', Q2_tot, 'eV' #  potential energy
         if show_occupancy:
-            print ('Occupation number          {0:15.6f}'.format(occupancy_lor))
-            print ('Fit temperature            {0:15.6f} K'.format(fit_temperature))
+            print(('Occupation number          {0:15.6f}'.format(occupancy_lor)))
+            print(('Fit temperature            {0:15.6f} K'.format(fit_temperature)))
             #print ('Fit temperature (Total)    {0:15.6f} K'.format(fit_temperature_tot))
 
-        print ('Base line                  {0:15.6f} eV * ps'.format(base_line))
-        print ('Maximum height             {0:15.6f} eV * ps'.format(maximum))
-        print ('Fitting global error       {0:15.6f}'.format(error))
+        print(('Base line                  {0:15.6f} eV * ps'.format(base_line)))
+        print(('Maximum height             {0:15.6f} eV * ps'.format(maximum)))
+        print(('Fitting global error       {0:15.6f}'.format(error)))
 
         if 'asymmetry' in fitting_parameters:
             asymmetry = fitting_parameters['asymmetry']
-            print ('Peak asymmetry             {0:15.6f}'.format(asymmetry))
+            print(('Peak asymmetry             {0:15.6f}'.format(asymmetry)))
 
         if harmonic_frequencies is not None:
-            print ('Frequency shift            {0:15.6f} THz'.format(position - harmonic_frequencies[i]))
+            print(('Frequency shift            {0:15.6f} THz'.format(position - harmonic_frequencies[i])))
 
         positions.append(position)
         widths.append(width)

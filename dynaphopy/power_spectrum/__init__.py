@@ -132,7 +132,7 @@ def mem_coefficient_scan_analysis(vq, trajectory, parameters):
             Fitting_function_class = fitting_functions.fitting_functions[parameters.fitting_function]
 
             if np.isnan(power_spectrum).any():
-                print('Warning: power spectrum error, skipping point {0}'.format(number_of_coefficients))
+                print(('Warning: power spectrum error, skipping point {0}'.format(number_of_coefficients)))
                 continue
 
           #  Fitting_curve = fitting_functions[parameters.fitting_function]
@@ -145,7 +145,7 @@ def mem_coefficient_scan_analysis(vq, trajectory, parameters):
 
 
             if not fitting_parameters['all_good']:
-                print('Warning: Fitting error, skipping point {0}'.format(number_of_coefficients))
+                print(('Warning: Fitting error, skipping point {0}'.format(number_of_coefficients)))
                 continue
 
 #            frequency = fitting_parameters['peak_position']
@@ -174,21 +174,21 @@ def mem_coefficient_scan_analysis(vq, trajectory, parameters):
         mem_full_dict.update({i: [power_spectrum, best_width, best_index, fit_data, scan_params]})
 
     for i in range(vq.shape[1]):
-        if not i in mem_full_dict.keys():
+        if not i in list(mem_full_dict.keys()):
             continue
 
-        print ('Peak # {0}'.format(i+1))
+        print(('Peak # {0}'.format(i+1)))
         print('------------------------------------')
-        print ('Estimated width      : {0} THz'.format(mem_full_dict[i][1]))
+        print(('Estimated width      : {0} THz'.format(mem_full_dict[i][1])))
 
         fit_data = mem_full_dict[i][3]
         scan_params = mem_full_dict[i][4]
         best_index = mem_full_dict[i][2]
 
-        print ('Position (best fit): {0} THz'.format(scan_params[best_index][0]))
-        print ('Area (best fit): {0} eV'.format(fit_data[3][best_index]))
-        print ('Coefficients num (best fit): {0}'.format(fit_data[0][best_index]))
-        print ('Fitting global error (best fit): {0}'.format(fit_data[2][best_index]))
+        print(('Position (best fit): {0} THz'.format(scan_params[best_index][0])))
+        print(('Area (best fit): {0} eV'.format(fit_data[3][best_index])))
+        print(('Coefficients num (best fit): {0}'.format(fit_data[0][best_index])))
+        print(('Fitting global error (best fit): {0}'.format(fit_data[2][best_index])))
         print ("\n")
 
         plt.figure(i+1)
@@ -250,7 +250,7 @@ def get_fft_numpy_spectra(vq, trajectory, parameters):
     requested_resolution = test_frequency_range[1]-test_frequency_range[0]
     maximum_resolution = 1./(trajectory.get_time_step_average()*(vq.shape[0]+parameters.zero_padding))
     if requested_resolution < maximum_resolution:
-        print('Power spectrum resolution requested unavailable, using maximum: {0:9.6f} THz'.format(maximum_resolution))
+        print(('Power spectrum resolution requested unavailable, using maximum: {0:9.6f} THz'.format(maximum_resolution)))
         print('If you need higher resolution increase the number of data')
 
     psd_vector = []

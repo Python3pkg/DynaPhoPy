@@ -318,7 +318,7 @@ def interactive_interface(calculation, trajectory, args, structure_file):
                         screen.border(0)
 
                         screen.addstr(2, 2, "Fitting functions...")
-                        for i in fitting_functions.keys():
+                        for i in list(fitting_functions.keys()):
                             algorithm = fitting_functions[i]
                             if i == calculation.parameters.fitting_function:
                                 screen.addstr(4+i, 3, ">"+str(i) +" : "+ str(algorithm).split('.')[-1].replace('_',' '))
